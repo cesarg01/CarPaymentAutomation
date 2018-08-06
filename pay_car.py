@@ -66,17 +66,9 @@ page_timeout(10, '#amountInputField')
 amount = browser.find_element_by_css_selector('#amountInputField')
 amount.click()
 
-
-get_amount_to_pay = 402.28
+# Amount needed to pay for the month
+get_amount_to_pay = "402.28"
 amount.send_keys(get_amount_to_pay)
-
-timeout = 15
-try:
-    element_present = EC.presence_of_element_located((By.XPATH, '//*[@title="Select account"]'))
-    WebDriverWait(browser, timeout).until(element_present)
-except TimeoutException:
-    print(browser.current_url)
-    print("Timed out waiting for page to load")
 
 # Click on the "Select Account" button
 select_account = browser.find_element_by_xpath('//*[@title="Select account"]')
@@ -91,9 +83,14 @@ make_transfer = browser.find_element_by_css_selector('#makeTransfer')
 make_transfer.click()
 
 # Confirm the amount and pay
+page_timeout(10, '#transfersConfirmationConfirmButton')
 confirm = browser.find_element_by_css_selector('#transfersConfirmationConfirmButton')
 confirm.click()
 
+# Click the go to accounts button after confirming payment
+page_timeout(10, '#accountsButton')
+accounts_button = browser.find_element_by_css_selector('#accountsButton')
+confirm.click()
 
 
 
